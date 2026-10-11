@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northline Detailing - Car Detailing Studio (demo)</title>
+<meta name="description" content="Demo landing page for a fictional car detailing studio.">
+<style>
+  /* ---------- Цвета и базовые настройки: меняются под клиента ---------- */
+  :root {
+    --bg: #0e1116;
+    --panel: #171b22;
+    --line: #262c36;
+    --text: #e8ebf0;
+    --muted: #9aa4b2;
+    --accent: #f2b33d;
+    --accent-dark: #1a1405;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, "Segoe UI", Roboto, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; scroll-margin-top: 64px; }
+  h1 { font-size: clamp(34px, 6vw, 60px); line-height: 1.08; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(26px, 4vw, 36px); letter-spacing: -0.01em; margin-bottom: 8px; }
+  .lead { color: var(--muted); max-width: 560px; }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-dark); font-weight: 700;
+         padding: 14px 22px; border-radius: 10px; border: 0; cursor: pointer; font-size: 16px; }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+
+  /* ---------- Шапка ---------- */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(14,17,22,.88); backdrop-filter: blur(8px);
+           border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 800; letter-spacing: .04em; }
+  .logo span { color: var(--accent); }
+  .links { display: flex; gap: 26px; color: var(--muted); }
+  .links a:hover { color: var(--text); }
+  .burger { display: none; background: none; border: 0; color: var(--text); font-size: 26px; cursor: pointer; }
+
+  /* ---------- Первый экран ---------- */
+  .hero { padding: 96px 0 80px;
+          background: radial-gradient(900px 420px at 85% -10%, rgba(242,179,61,.20), transparent 60%); }
+  .hero p { margin: 18px 0 28px; font-size: 18px; }
+  .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 56px; }
+  .fact { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  .fact b { display: block; font-size: 26px; color: var(--accent); }
+  .fact span { color: var(--muted); font-size: 14px; }
+
+  /* ---------- Услуги ---------- */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .card h3 { margin-bottom: 6px; }
+  .card p { color: var(--muted); font-size: 15px; }
+  .price { margin-top: 16px; font-weight: 700; color: var(--accent); }
+
+  /* ---------- Калькулятор ---------- */
+  .calc { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-top: 32px; }
+  .calc label { display: block; margin-bottom: 14px; font-size: 14px; color: var(--muted); }
+  select, input, textarea { width: 100%; margin-top: 6px; padding: 12px; border-radius: 10px;
+         border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
+  .check { display: flex; align-items: center; gap: 10px; color: var(--text); }
+  .check input { width: 18px; height: 18px; margin: 0; }
+  .total { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .total b { font-size: 52px; color: var(--accent); line-height: 1.1; }
+  .total small { color: var(--muted); }
+
+  /* ---------- Вопросы ---------- */
+  details { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+            padding: 16px 20px; margin-top: 12px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin-top: 10px; }
+
+  /* ---------- Форма ---------- */
+  form { display: grid; gap: 14px; max-width: 520px; margin-top: 28px; }
+  .error { color: #ff8a80; font-size: 14px; min-height: 20px; }
+  .ok { color: #7ddc9a; font-weight: 600; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; }
+
+  /* ---------- Телефон ---------- */
+  @media (max-width: 760px) {
+    section { padding: 52px 0; }
+    .grid, .facts, .calc { grid-template-columns: 1fr; }
+    .burger { display: block; }
+    .links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; gap: 0;
+             background: var(--panel); border-bottom: 1px solid var(--line); }
+    .links.open { display: flex; }
+    .links a { padding: 14px 20px; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">NORTH<span>LINE</span></a>
+    <nav class="links" id="links">
+      <a href="#services">Services</a>
+      <a href="#calculator">Price calculator</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu">&#9776;</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Your car, back to<br>showroom condition.</h1>
+      <p class="lead">Hand wash, paint correction and ceramic coating in one studio. Book a slot online and drop the car off the same week.</p>
+      <div class="actions">
+        <a class="btn" href="#contact">Book a visit</a>
+        <a class="btn ghost" href="#calculator">Estimate the price</a>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>3 h</b><span>average time for a full interior clean</span></div>
+        <div class="fact"><b>2 years</b><span>warranty on ceramic coating</span></div>
+        <div class="fact"><b>7 days</b><span>open every day, 9:00 to 20:00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>Services</h2>
+      <p class="lead">Three packages that cover most cars. Prices are for a sedan.</p>
+      <div class="grid">
+        <div class="card"><h3>Exterior wash</h3><p>Two-bucket hand wash, wheels, glass and a quick wax finish.</p><div class="price">from 35 €</div></div>
+        <div class="card"><h3>Interior deep clean</h3><p>Seats, carpets and plastics cleaned with steam and extraction.</p><div class="price">from 90 €</div></div>
+        <div class="card"><h3>Ceramic coating</h3><p>One-step polish followed by a ceramic layer that protects the paint.</p><div class="price">from 320 €</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator">
+    <div class="wrap">
+      <h2>Price calculator</h2>
+      <p class="lead">Pick the service and car size to see an estimate.</p>
+      <div class="calc">
+        <div class="card">
+          <label>Service
+            <select id="service">
+              <option value="35">Exterior wash</option>
+              <option value="90">Interior deep clean</option>
+              <option value="320">Ceramic coating</option>
+            </select>
+          </label>
+          <label>Car size
+            <select id="size">
+              <option value="1">Sedan / hatchback</option>
+              <option value="1.2">SUV / estate</option>
+              <option value="1.4">Van / minibus</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" id="engine"> Engine bay cleaning (+25 €)</label>
+          <label class="check"><input type="checkbox" id="pickup"> Pick-up and delivery (+15 €)</label>
+        </div>
+        <div class="card total">
+          <small>Estimated price</small>
+          <b id="total">35 €</b>
+          <small>Final price is confirmed after inspection</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details><summary>How long does ceramic coating take?</summary><p>Usually one full day. The car stays in the studio overnight so the coating can cure.</p></details>
+      <details><summary>Do I need to book in advance?</summary><p>Yes. Send the form below and we will confirm a time by phone or message.</p></details>
+      <details><summary>Can I pay by card?</summary><p>Card and cash are both accepted at the studio.</p></details>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Book a visit</h2>
+      <p class="lead">Leave your details and we will get back to you within a working day.</p>
+      <form id="form" novalidate>
+        <input id="name" placeholder="Your name" autocomplete="name">
+        <input id="phone" placeholder="Phone number" inputmode="tel" autocomplete="tel">
+        <textarea id="message" rows="3" placeholder="Car model and what you need (optional)"></textarea>
+        <div class="error" id="error"></div>
+        <button class="btn" type="submit">Send request</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Northline Detailing is a fictional studio. This page is a portfolio demo.</div>
+</footer>
+
+<script>
+  // ---------- Мобильное меню ----------
+  const links = document.getElementById("links");
+  document.getElementById("burger").addEventListener("click", () => links.classList.toggle("open"));
+  links.addEventListener("click", () => links.classList.remove("open"));
+
+  // ---------- Калькулятор цены ----------
+  const service = document.getElementById("service");
+  const size = document.getElementById("size");
+  const engine = document.getElementById("engine");
+  const pickup = document.getElementById("pickup");
+
+  function updateTotal() {
+    let price = Number(service.value) * Number(size.value);  // базовая цена * коэффициент размера
+    if (engine.checked) price += 25;
+    if (pickup.checked) price += 15;
+    document.getElementById("total").textContent = Math.round(price) + " €";
+  }
+  [service, size, engine, pickup].forEach(el => el.addEventListener("change", updateTotal));
+  updateTotal();
+
+  // ---------- Проверка формы ----------
+  // Это демо: заявка никуда не отправляется. Для реального клиента сюда подключается
+  // отправка на почту или в Telegram (например, в бота владельца).
+  const form = document.getElementById("form");
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const error = document.getElementById("error");
+
+    if (name.length < 2) { error.textContent = "Please enter your name."; return; }
+    if (phone.replace(/\D/g, "").length < 7) { error.textContent = "Please enter a valid phone number."; return; }
+
+    form.innerHTML = '<p class="ok">Thank you, ' + name.replace(/[<>&]/g, "") +
+                     '! This is a demo, so the request was not actually sent.</p>';
+  });
+</script>
+</body>
+</html>
