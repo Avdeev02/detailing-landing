@@ -2,7 +2,7 @@
 
 A one-page site for a fictional car detailing studio. Built as a portfolio project.
 
-**Live demo:** https://lilbro228.github.io/detailing-landing/
+**Live demo:** https://avdeev02.github.io/detailing-landing/
 
 ## Features
 
